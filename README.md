@@ -1,4 +1,4 @@
-#ICRA 2022 Roboethics Hackathon - Submission by Sachin Pullil
+# ICRA 2022 Roboethics Hackathon - Submission by Sachin Pullil
 
 
 For my submission, I chose to implement my team's proposal - the Ethical Home Robot.
