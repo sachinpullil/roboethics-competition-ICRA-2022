@@ -4,12 +4,14 @@ import processing.core.PImage;
 class Entity extends PApplet {
   String name;
   protected PImage img; 
-  protected String imagePath; 
+  String imagePath; 
   
   
   Entity(String name, String imagePath){
     this.name = name;
     this.imagePath = imagePath;
+    if(name.equals("Amy Copper"))
+      println(imagePath);
   }
 
   public void init(PApplet papplet){

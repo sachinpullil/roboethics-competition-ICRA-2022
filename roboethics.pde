@@ -30,6 +30,20 @@ void setup(){
 
 }
 
+void InitializeCharacters(Scenario scene)
+{
+  for (Character chara : scene.characters.values()){
+    chara.init(this);
+  }
+}
+
+void InitializeItems(Scenario scene)
+{
+  for (Item item : scene.items.values()){
+    item.init(this);
+  }
+}
+
 void draw(){
   background(0); // black bg
   updateRooms(Scenario.instance().rooms); // renders rooms

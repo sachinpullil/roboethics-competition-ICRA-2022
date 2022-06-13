@@ -38,12 +38,12 @@ class Scenario {
 
     public static HashMap<String, Character> characters = new HashMap<String, Character>(){{
 
-        put("Jill Smith", new Character("Jill Smith", "assets/characters/mom.png"));
-        put("Amy Copper", new Character("Amy Copper", "assets/characters/daughter.png"));
-        put("Ben",        new Character("Ben",        "assets/characters/bebe.png"));
-        put("Buddy",      new Character("Buddy",      "assets/characters/dog.png"));
-        put("V",          new Character("V",          "assets/characters/bf.png"));
-        put("Robot",      new Character("Robot",      "assets/characters/robot.png"));
+        put("Jill Smith", new Character("Jill Smith", "assets/characters/mom.png", "Administrator"));
+        put("Amy Copper", new Character("Amy Copper", "assets/characters/daughter.png", "Partial User"));
+        put("Ben",        new Character("Ben",        "assets/characters/bebe.png", "NOT_USER"));
+        put("Buddy",      new Character("Buddy",      "assets/characters/dog.png", "NOT_USER"));
+        put("V",          new Character("V",          "assets/characters/bf.png", "Non-household Member"));
+        put("Robot",      new Character("Robot",      "assets/characters/robot.png", "ROBOT"));
 
     }};
 
@@ -51,12 +51,14 @@ class Scenario {
     // items ......................................................
 
     public static HashMap<String, Item> items = new HashMap<String, Item>(){{
-        put("Credit Card", new Item("Credit Card", "assets/items/credit_card.png")); 
-        put("Wallet",      new Item("Wallet", "assets/items/wallet.png")); 
-        put("Knife",       new Item("Knife", "assets/items/knife.png")); 
-        put("Beer",        new Item("Beer", "assets/items/beer.png")); 
-        put("Diary",       new Item("Diary", "assets/items/diary.png")); 
-
+        put("Credit Card", new Item("Credit Card", "assets/items/credit_card.png", "Financial")); 
+        put("Wallet",      new Item("Wallet", "assets/items/wallet.png", "Financial")); 
+        put("Knife",       new Item("Knife", "assets/items/knife.png", "Dangerous_P")); 
+        put("Beer",        new Item("Beer", "assets/items/beer.png", "Dangerous_P")); 
+        put("Diary",       new Item("Diary", "assets/items/diary.png", "Personal"));
+        put("Water",       new Item("Water", "assets/items/water.png", "General"));
+        put("Fire Extinguisher",       new Item("Fire Extinguisher", "assets/items/fire_extinguisher.png", "Emergency"));
+  
     }};
 
     
@@ -84,6 +86,8 @@ class Scenario {
 
         // placing items .............................................
         rooms.get("Kitchen")     .addItem(items.get("Knife"));
+        rooms.get("Kitchen")     .addItem(items.get("Water"));
+        rooms.get("Kitchen")     .addItem(items.get("Fire Extinguisher"));
         rooms.get("Bedroom 2")   .addItem(items.get("Diary"));
         rooms.get("Common Space").addItem(items.get("Credit Card"));
         rooms.get("Bedroom 1")   .addItem(items.get("Wallet"));

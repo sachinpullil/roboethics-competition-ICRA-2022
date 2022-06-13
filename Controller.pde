@@ -42,11 +42,29 @@ class Controller {
         }
         else{
             finalRoom = getCurrentRobotRoom();
-            updateStatus("Reciever is of an invalid type");
+            updateStatus("Receiver is of an invalid type");
         }
+        
+        boolean bAllowed = CheckAccessRuleTable(requester, item);
 
-        // moves the robot from current room -> item location -> reciever location
-        FetchProcedureAsync(item, fetchRoom, finalRoom, receiver);
+        // moves the robot from current room -> item location -> receiver location
+        if(bAllowed)
+        {
+          FetchProcedureAsync(item, fetchRoom, finalRoom, receiver);
+           CompletableFuture.delayedExecutor(4, TimeUnit.SECONDS).execute(() -> {
+                String msg = CheckIfMessageIsNecessary(item);
+                if(!msg.isEmpty())
+                updateStatus(msg);
+            });
+          
+        }
+        else
+        {
+          updateStatus("Request denied. Operator role '"+requester.role+"' does not have access to Item class '"+item.item_class+"'");
+          CompletableFuture.delayedExecutor(3, TimeUnit.SECONDS).execute(() -> {
+                if(gui != null) gui.toggleState();
+            });
+        }
                 
     }
 
@@ -81,7 +99,63 @@ public void FetchProcedureAsync(Item item, Room fetchRoom, Room finalRoom, Entit
 
 
     }
+    
+private String CheckIfMessageIsNecessary(Item item)
+{
+  String item_class = item.item_class;
+  String message = "";
+  
+  if(item_class.equals("Dangerous_P"))
+    message = "This item is dangerous to humans. Please be careful.";
+  else if(item_class.equals("Emergency"))
+    message = "This item is used in an emergency. Would you like me to call emergency services?";
+    
+  return message;    
+}
 
+private boolean CheckAccessRuleTable(Character requester, Item item)
+{
+  String operator_role = requester.role;
+  String item_class = item.item_class;
+  
+  if(item_class.equals("Infeasible") || item_class.equals("Dangerous_R"))
+    return false;
+  
+  if(operator_role.equals("Administrator"))
+  {
+    if(item_class.equals("General Ban"))
+      return false;
+    else
+      return true;
+  }
+  else if(operator_role.equals("Full User"))
+  {
+    if(item_class.equals("General Ban") || item_class.equals("UD Ban"))
+      return false;
+    else
+      return true;
+  }
+  else if(operator_role.equals("Partial User"))
+  {
+    if(item_class.equals("General") || item_class.equals("Emergency"))
+      return true;
+    else
+      return false;
+  }
+  else if(operator_role.equals("Non-household Member"))
+  {
+    if(item_class.equals("Emergency"))
+      return true;
+    else
+      return false;
+  }
+  else if(operator_role.equals("Official"))
+  {
+    return true;
+  }
+  
+  return false;
+}
     
 
     private void travel(ArrayList<Room> path){
