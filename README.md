@@ -1,6 +1,6 @@
 # ICRA 2022 Roboethics Hackathon - Submission by Sachin Pullil
 
-**UPDATE (June 2022): To try this solution, clone this repository and run 'roboethics.pde'.
+**UPDATE (June 2022): To try this solution, clone this repository and run 'roboethics.pde'.**
 
 For my submission, I chose to implement my team's proposal - the Ethical Home Robot.
 
